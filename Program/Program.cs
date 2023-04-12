@@ -28,21 +28,23 @@ namespace Program
         }
         static int[][] ArraySpace()
         {
-            Console.WriteLine("Введiть кiлькiсть рядкiв:");
+            Console.Write("Введiть кiлькiсть рядкiв:");
             int rows = Convert.ToInt32(Console.ReadLine());
             int[][] array = new int[rows][];
-            
+
             for (int i = 0; i < rows; i++)
             {
                 Console.WriteLine($"Введiть елементи {i}-го рядка, через Space:");
                 string[] numbers = Console.ReadLine().Split(' ');
                 array[i] = new int[numbers.Length];
-                
+
                 for (int j = 0; j < numbers.Length; j++)
                 {
                     array[i][j] = Convert.ToInt32(numbers[j]);
                 }
             }
+            Console.WriteLine("Створений масив:");
+            PrintArray(array);
             return array;
         }
         static void PrintArray(int[][] array)
@@ -64,7 +66,7 @@ namespace Program
             }
             Console.WriteLine();
         }
-        static int[] CalculateArrayZ(int[][] arrayP)
+        static int[] ArrayZ(int[][] arrayP)
         {
             int[] arrayZ = new int[arrayP.Length];
             int maxColumns = arrayP[0].Length;
@@ -72,7 +74,7 @@ namespace Program
             for (int i = 0; i < arrayP.Length; i++)
             {
                 int lastZeroIndex = -1;
-                
+
                 for (int j = arrayP[i].Length - 1; j >= 0; j--)
                 {
                     if (arrayP[i][j] == 0)
@@ -81,8 +83,16 @@ namespace Program
                         break;
                     }
                 }
-                arrayZ[i] = lastZeroIndex == -1 ? arrayP[i].Length : lastZeroIndex + 1;
-                
+
+                if (lastZeroIndex == -1)
+                {
+                    arrayZ[i] = arrayP[i].Length;
+                }
+                else
+                {
+                    arrayZ[i] = lastZeroIndex + 1;
+                }
+
                 if (arrayZ[i] > maxColumns)
                 {
                     maxColumns = arrayZ[i];
@@ -91,15 +101,15 @@ namespace Program
             return arrayZ;
         }
 
-        static int[][] GenerateArrayQ(int[] arrayZ)
+        static int[][] ArrayQ(int[] arrayZ)
         {
             int[][] arrayQ = new int[arrayZ.Length][];
             Random rand = new Random();
-            
+
             for (int i = 0; i < arrayQ.Length; i++)
             {
                 arrayQ[i] = new int[arrayZ[i]];
-                
+
                 for (int j = 0; j < arrayQ[i].Length; j++)
                 {
                     arrayQ[i][j] = rand.Next(-100, 100);
@@ -116,7 +126,7 @@ namespace Program
                 {
                     int key = arrayQ[i][j];
                     int k = j - 1;
-                    
+
                     while (k >= 0 && arrayQ[i][k] < key)
                     {
                         arrayQ[i][k + 1] = arrayQ[i][k];
@@ -128,8 +138,8 @@ namespace Program
         }
         static void BlockSecond(int[][] arrayP)
         {
-            int[] arrayZ = CalculateArrayZ(arrayP);
-            int[][] arrayQ = GenerateArrayQ(arrayZ);
+            int[] arrayZ = ArrayZ(arrayP);
+            int[][] arrayQ = ArrayQ(arrayZ);
             InsertionSortQ(arrayQ);
 
             Console.WriteLine("Матриця P:");
@@ -138,6 +148,7 @@ namespace Program
             PrintArraySecond(arrayZ);
             Console.WriteLine("Матриця Q:");
             PrintArray(arrayQ);
+            Console.ReadKey();
         }
         public static void Main(string[] args)
         {
@@ -147,7 +158,7 @@ namespace Program
             Console.WriteLine("Введiть 0 для виходу з програми!");
             int choice = Convert.ToInt32(Console.ReadLine());
             int[][] arrayP;
-            
+
             switch (choice)
             {
                 case 0:
