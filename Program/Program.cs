@@ -6,7 +6,7 @@ namespace Program
     {
         static int[][] ArrayRandom()
         {
-            Console.Write("Введiть кiлькiсть рядкiв: ");
+            Console.WriteLine("Введiть кiлькiсть рядкiв:");
             int rowNumber = Convert.ToInt32(Console.ReadLine());
             int[][] array = new int[rowNumber][];
             Random random = new Random();
@@ -28,7 +28,7 @@ namespace Program
         }
         static int[][] ArraySpace()
         {
-            Console.Write("Введiть кiлькiсть рядкiв:");
+            Console.WriteLine("Введiть кiлькiсть рядкiв:");
             int rows = Convert.ToInt32(Console.ReadLine());
             int[][] array = new int[rows][];
 
